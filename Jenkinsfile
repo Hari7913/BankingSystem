@@ -3,23 +3,23 @@ pipeline {
 
     tools {
         jdk 'jdk21'
-        maven 'maven3'
     }
 
     stages {
 
         stage('Clone') {
             steps {
-                git 'https://github.com/Hari7913/BankingSystem.git'
+                git branch: 'master',
+                credentialsId: 'git-creds',
+                url: 'https://github.com/Hari7913/BankingSystem.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                sh 'find src -name "*.java" > sources.txt'
+                sh 'javac @sources.txt'
             }
         }
-
-       
     }
 }
